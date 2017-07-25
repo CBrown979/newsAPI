@@ -17,17 +17,32 @@ $(document).ready(function(){
             // console.log(response.sources[2]);
             var sources=response.sources;
             // console.log(sources[2]);
-            var html="<select class='form-control' id='source'>";
+            var html="<select class='form-control' id='sourceOption'>";
             $.each(sources, function(index,source){
                 // console.log(source);
-                html += "<option value='id?'>"+source.name+"</option>";
+                html += "<option value='" + source.id + "'>"+source.name+"</option>";
             })
             html+= "</select>";
-            console.log(html);
+            // console.log(html);
             $(".form-group").html(html);
         }
     })
+})
     //submit button
-    //$('select').val()
-});
-
+   $("#source").submit(function() { 
+       console.log('im here');//event is the process of submitting the button - the action or direct response of executing function of submitting the form
+       event.preventDefault(); //don't do your normal function, do what I want you to do -- hitting submit automatically refreshes the page
+       var id = $('#sourceOption').val() // gives source id of the value we want
+       var url = "https://newsapi.org/v1/articles";
+       var data = {apiKey:"c72a325fc4164584bd3079abe50692b1", source: id}
+       $.ajax({
+           url: url, 
+           data: data, 
+           type: "GET",
+           success: function(response) {
+               console.log(response);
+            //   var articles = response.articles
+           }
+           
+       })
+})
