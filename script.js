@@ -30,7 +30,7 @@ $(document).ready(function(){
 })
     //submit button
    $("#source").submit(function() { 
-       console.log('im here');//event is the process of submitting the button - the action or direct response of executing function of submitting the form
+      console.log('im here');//event is the process of submitting the button - the action or direct response of executing function of submitting the form
        event.preventDefault(); //don't do your normal function, do what I want you to do -- hitting submit automatically refreshes the page
        var id = $('#sourceOption').val() // gives source id of the value we want
        var url = "https://newsapi.org/v1/articles";
@@ -40,8 +40,14 @@ $(document).ready(function(){
            data: data, 
            type: "GET",
            success: function(response) {
-               console.log(response);
-            //   var articles = response.articles
+            //   console.log(response);
+              var articles = response.articles
+              var html = "<ul class='list-group'>"
+              $.each(articles, function(index, article) {
+                  html += "<li class='list-item'>" + article.title + "</li>"
+              })
+              html += "</ul>";
+              $("#articles").html(html);
            }
            
        })
